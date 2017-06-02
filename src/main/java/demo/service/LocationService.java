@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by vagrant on 5/31/17.
  */
-public interface LocationServiceImpl {
+public interface LocationService {
 
     List<Location> svaeRunningLocations(List<Location> runningLocations);
 

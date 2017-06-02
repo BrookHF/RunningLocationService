@@ -3,18 +3,18 @@ package demo.service.impl;
 import demo.domain.Location;
 import demo.domain.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import demo.service.LocationService;
 import java.util.List;
 
 /**
  * Created by vagrant on 5/31/17.
  */
-public class LocationServiceImplImpl implements demo.service.LocationServiceImpl {
+public class LocationServiceImpl implements LocationService {
 
     private LocationRepository locationRepository;
 
     @Autowired
-    public LocationServiceImplImpl(LocationRepository locationRepository) {
+    public LocationServiceImpl(LocationRepository locationRepository) {
 
         this.locationRepository = locationRepository;
     }
@@ -29,6 +29,14 @@ public class LocationServiceImplImpl implements demo.service.LocationServiceImpl
         locationRepository.deleteAll();
     }
 
+    @Override
+    public List<Location> findByRunnerMovementType(String movementType) {
+        return null;
+    }
 
+    @Override
+    public List<Location> findByRunningId(String runningId) {
+        return null;
+    }
 }
 
