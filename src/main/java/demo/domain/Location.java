@@ -1,5 +1,8 @@
 package demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 /**
@@ -43,10 +46,11 @@ public class Location {
     @Embedded
     @AttributeOverride(name = "bandMake", column = @Column(name = "unit_band_make"))
     private UnitInfo unitInfo;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name="fml", column = @Column(name = "medical_fmi")),
-            @AttributeOverride(name="bft", column = @Column(name = "medical_bfr"))
+            @AttributeOverride(name="bfr", column = @Column(name = "medical_bfr"))
     })
     private MedicalInfo medicalInfo;
 
@@ -56,7 +60,8 @@ public class Location {
         this.unitInfo = unitInfo;
     }
 
-    public Location(String runningId) {
+    @JsonCreator
+    public Location(@JsonProperty("runningId") String runningId) {
         this.unitInfo = new UnitInfo(runningId);
     }
 
