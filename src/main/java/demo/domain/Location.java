@@ -1,22 +1,45 @@
+/*
+ * Copyright 2015 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Date;
-/**
- * Created by vagrant on 5/29/17.
- */
+
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 @Entity
-@Table(name = "LOCATIONS")
 public class Location {
 
     enum GpsStatus {
-        EXCELLENT, OK, UNRELIABLE, BAD, NOFIX, UNKNOWN
+        EXCELLENT, OK, UNRELIABLE, BAD, NOFIX, UNKNOWN;
     }
 
-    public enum RunnerMovementType{
+    public enum RunnerMovementType {
         STOPPED, IN_MOTION;
 
         public boolean isMoving() {
@@ -27,14 +50,21 @@ public class Location {
     @Id
     @GeneratedValue
     private Long id;
-
+    @Embedded
+    @AttributeOverride(name = "bandMake", column = @Column(name = "unit_band_make"))
+    private final UnitInfo unitInfo;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "fmi", column = @Column(name = "medical_fmi")),
+            @AttributeOverride(name = "bfr", column = @Column(name = "medical_bfr"))})
+    private MedicalInfo medicalInfo;
     private double latitude;
     private double longitude;
     private String heading;
-    private double pgsSpeed;
+    private double gpsSpeed;
     private GpsStatus gpsStatus;
     private double odometer;
-    private double totalRuningTime;
+    private double totalRunningTime;
     private double totalIdleTime;
     private double totalCalorieBurnt;
     private String address;
@@ -43,21 +73,10 @@ public class Location {
     private RunnerMovementType runnerMovementType = RunnerMovementType.STOPPED;
     private String serviceType;
 
-    @Embedded
-    @AttributeOverride(name = "bandMake", column = @Column(name = "unit_band_make"))
-    private UnitInfo unitInfo;
+    private int heartRate = 60;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name="fml", column = @Column(name = "medical_fmi")),
-            @AttributeOverride(name="bfr", column = @Column(name = "medical_bfr"))
-    })
-    private MedicalInfo medicalInfo;
-
-    public Location() {}
-
-    public Location(UnitInfo unitInfo) {
-        this.unitInfo = unitInfo;
+    public Location() {
+        this.unitInfo = null;
     }
 
     @JsonCreator
@@ -65,7 +84,13 @@ public class Location {
         this.unitInfo = new UnitInfo(runningId);
     }
 
+
+    public Location(UnitInfo unitInfo) {
+        this.unitInfo = unitInfo;
+    }
+
     public String getRunningId() {
         return this.unitInfo == null ? null : this.unitInfo.getRunningId();
     }
+
 }

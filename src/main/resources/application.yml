@@ -1,0 +1,16 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: running-location-service
+#  h2:
+#    console:
+#      enabled: true
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/spring_demo
+#    username: root
+#    password: password
+#    driver-class-name: com.mysql.jdbc.Driver
