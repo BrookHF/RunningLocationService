@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.spingframework.data:sping-dat-rest-hal-browser:unknown">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/spingframework/data/sping-dat-rest-hal-browser/unknown/sping-dat-rest-hal-browser-unknown.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/spingframework/data/sping-dat-rest-hal-browser/unknown/sping-dat-rest-hal-browser-unknown-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/spingframework/data/sping-dat-rest-hal-browser/unknown/sping-dat-rest-hal-browser-unknown-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
