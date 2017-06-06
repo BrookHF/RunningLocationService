@@ -65,4 +65,6 @@ public class RunningBulkUploadController {
         return this.locationService.findByRunningId(runningId, new PageRequest(page, size));
     }
 
+
+
 }
